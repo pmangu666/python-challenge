@@ -6,13 +6,20 @@ import csv
 import os
 
 # Files to load and output (update with correct file paths)
-file_to_load = os.path.join("Resources", "election_data.csv")  # Input file path
-file_to_output = os.path.join("analysis", "election_analysis.txt")  # Output file path
+INPUT_PATH = os.path.join("Resources", "election_data.csv")
+OUTPUT_PATH = os.path.join("analysis", "election_analysis.txt")
+
+# print(__file__)
+# print(os.path.realpath(__file__))
+# print(os.path.dirname(__file__))
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 # Initialize variables to track the election data
-total_votes = 0  # Track the total number of votes cast
-candidate_options = []  # List to track candidate names
-candidate_votes = {}  # Dictionary to track candidate vote counts
+total_votes = 0  
+
+# Define lists and dictionaries to track candidate names and vote counts
+candidate_options = [] 
+candidate_votes = {} 
 
 # Winning Candidate and Winning Count Tracker
 winning_candidate = ""
@@ -20,7 +27,7 @@ winning_count = 0
 winning_percentage = 0
 
 # Open the CSV file and process it
-with open(file_to_load) as election_data:
+with open(INPUT_PATH) as election_data:
     reader = csv.reader(election_data)
 
     # Skip the header row
@@ -47,7 +54,7 @@ with open(file_to_load) as election_data:
         candidate_votes[candidate_name] += 1
 
 # Open a text file to save the output
-with open(file_to_output, "w") as txt_file:
+with open(OUTPUT_PATH, "w") as txt_file:
 
     # Print the total vote count (to terminal)
     election_results = (
@@ -81,9 +88,8 @@ with open(file_to_output, "w") as txt_file:
     winning_candidate_summary = (
         f"-------------------------\n"
         f"Winner: {winning_candidate}\n"
-        f"Winning Vote Count: {winning_count}\n"
-        f"Winning Percentage: {winning_percentage:.3f}%\n"
         f"-------------------------\n"
     )
+    # Save the winning candidate summary to the text file
     print(winning_candidate_summary)
     txt_file.write(winning_candidate_summary)
